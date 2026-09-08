@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "admin.html", "use": "@vercel/static" },
+    { "src": "*.js", "use": "@vercel/static", "config": { "zeroConfig": false } },
+    { "src": "*.css", "use": "@vercel/static" },
+    { "src": "assets/**", "use": "@vercel/static" },
+    { "src": "config.js", "use": "@vercel/static" },
+    { "src": "api/messages.js", "use": "@vercel/node" }
+  ],
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/api/messages", "destination": "/api/messages.js" }
+  ]
+}

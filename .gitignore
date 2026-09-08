@@ -1,0 +1,13 @@
+# Secrets — never commit real keys
+.env
+.env.local
+
+# Local Vercel dev data (if any)
+.vercel
+
+# Node
+node_modules/
+
+# Keep .env.example tracked for documentation, but ignore any real env file
+.env.*
+!.env.example
