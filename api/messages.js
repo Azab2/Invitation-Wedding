@@ -22,10 +22,11 @@ function rest() {
   return (process.env.SUPABASE_URL || '') + '/rest/v1/' + TABLE;
 }
 
-async function supabaseReq(path, init) {
+async function supabaseReq(path, init, keyOverride) {
+  const key = keyOverride || process.env.SUPABASE_ANON_KEY;
   const headers = {
-    'apikey': process.env.SUPABASE_ANON_KEY,
-    'Authorization': 'Bearer ' + process.env.SUPABASE_ANON_KEY
+    'apikey': key,
+    'Authorization': 'Bearer ' + key
   };
   if (init && init.headers) {
     Object.assign(headers, init.headers);
@@ -85,7 +86,9 @@ module.exports = async function handler(req, res) {
         return send(res, 401, { error: 'Unauthorized' });
       }
       const rows = await supabaseReq(
-        '?select=guest_name,message,created_at&wedding_id=eq.' + process.env.WEDDING_ID + '&order=created_at.asc'
+        '?select=guest_name,message,created_at&wedding_id=eq.' + process.env.WEDDING_ID + '&order=created_at.asc',
+        undefined,
+        process.env.SUPABASE_SERVICE_ROLE_KEY
       );
       const messages = (Array.isArray(rows) ? rows : []).map(r => ({
         name: r.guest_name,
