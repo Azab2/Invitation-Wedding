@@ -69,7 +69,7 @@ module.exports = async function handler(req, res) {
 
       await supabaseReq('', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           wedding_id: process.env.WEDDING_ID,
           guest_name: guest_name,
