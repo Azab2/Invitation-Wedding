@@ -60,8 +60,9 @@ module.exports = async function handler(req, res) {
     const method = (req.method || '').toUpperCase();
 
     if (method === 'POST') {
-      let body = '';
-      for await (const chunk of req) body += chunk;
+      const raw = [];
+      for await (const chunk of req) raw.push(Buffer.from(chunk));
+      const body = Buffer.concat(raw).toString('utf8');
       let parsed = {};
       try { parsed = JSON.parse(body); } catch (e) {}
       const guest_name = sanitize(parsed.name, 100);
